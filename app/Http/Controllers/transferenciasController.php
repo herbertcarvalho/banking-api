@@ -38,7 +38,7 @@ class transferenciasController extends Controller
             ->where(['contas_abertas.conta' => $input['conta_receptor']])
             ->get();
 
-        if(($id_doador==null || $id_receptor==null)){
+        if(!($id_doador==null || $id_receptor==null)){
 
             $novoSaldoDoador = $id_doador[0]['saldo_atual'] - $input['valor'];
             $novoSaldoReceptor = $id_receptor[0]['saldo_atual'] + $input['valor'];
