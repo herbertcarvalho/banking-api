@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+#Requests
 use App\Http\Requests\allContasRequest;
-use Illuminate\Http\Request;
 use App\Http\Requests\contaagenciaRequest;
+
+#Models
 use App\Models\info_usuario;
 use App\Models\User;
 use App\Models\contas_abertas;
+
+#Imports
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Enumerable;
-use Illuminate\Testing\Constraints\ArraySubset;
-use PhpParser\Node\Expr\AssignOp\Concat;
 
 class contaagenciaController extends Controller
 {
@@ -25,6 +26,9 @@ class contaagenciaController extends Controller
     }
 
     public function getAllContasEmail(allContasRequest $request){
+
+        $json_error_status_code = 400;
+
         $request = $request->validated();
         $idTableUsers= User::with([])
             ->where(['users.email' => $request['email']])
@@ -32,7 +36,7 @@ class contaagenciaController extends Controller
 
         if($idTableUsers->isEmpty()){
             return Response::json([
-                'status_code' => 400,
+                'status_code' => $json_error_status_code,
                 'message' => 'o email na solicitacao nao possui cadastro no banco'
             ]);
         }
@@ -43,7 +47,7 @@ class contaagenciaController extends Controller
 
         if($idTableInfoUser->isEmpty()){
             return Response::json([
-                'status_code' => 400,
+                'status_code' => $json_error_status_code,
                 'message' => 'é necessario cadastrar o cliente no tabela info_usuarios'
             ]);
         }
@@ -57,6 +61,8 @@ class contaagenciaController extends Controller
 
     public function registrarConta(contaagenciaRequest $request){
 
+        $json_error_status_code = 400;
+
         $request = $request->Validated();
 
         $idTableUsers = User::with([])
@@ -65,7 +71,7 @@ class contaagenciaController extends Controller
 
         if($idTableUsers->isEmpty()){
             return Response::json([
-                'status_code' => 400,
+                'status_code' => $json_error_status_code,
                 'message' => 'o email na solicitacao nao possui cadastro no banco'
             ]);
         }
@@ -75,13 +81,13 @@ class contaagenciaController extends Controller
 
         if($idTableInfoUser->isEmpty()){
             return Response::json([
-                'status_code' => 400,
+                'status_code' => $json_error_status_code,
                 'message' => 'é necessario cadastrar o cliente no tabela info_usuarios'
             ]);
         }
 
-        $contaGerada=123456;
-        $agenciaGerada=123456;
+        $contaGerada=null;
+        $agenciaGerada=null;
 
         while(!(contas_abertas::with([])->where(['contas_abertas.conta' => $contaGerada])->get())->isEmpty()
                 && !(contas_abertas::with([])->where(['contas_abertas.agencia' => $contaGerada])->get()) ->isEmpty()){

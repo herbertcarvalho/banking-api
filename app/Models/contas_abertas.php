@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+#Import
 use Illuminate\Database\Eloquent\Model;
 
 class contas_abertas extends Model

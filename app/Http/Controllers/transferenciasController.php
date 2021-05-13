@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+#Requests
+use App\Http\Requests\transferAmountRequest;
+
+#Models
 use App\Models\transferencias;
 use App\Models\contas_abertas;
-use App\Models\User;
-use App\Http\Requests\transferAmountRequest;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Response;
 
-use function PHPUnit\Framework\isEmpty;
+#Import
+use Illuminate\Support\Facades\Response;
 
 class transferenciasController extends Controller
 {
+
     public function index()
     {
         return transferencias::with(['doador', 'receptor'] )->get();
@@ -21,6 +22,7 @@ class transferenciasController extends Controller
 
     public function fazertransferencia(transferAmountRequest $request)
     {
+        $json_error_status_code = 400;
 
         $input = $request->validated();
 
@@ -39,7 +41,7 @@ class transferenciasController extends Controller
 
             if($novoSaldoDoador<0){
                 return Response::json([
-                    'status_code' => 400,
+                    'status_code' => $json_error_status_code,
                     'message' => 'o novo saldo do doador é menor que 0 impossibilitando a transferencia'
                 ]);
             }
@@ -68,12 +70,12 @@ class transferenciasController extends Controller
         }else{
             if($id_doador->isEmpty()){
                 return Response::json([
-                'status_code' => 400,
+                'status_code' => $json_error_status_code,
                 'message' => 'a conta doadora nao esta cadastrada no banco'
                 ]);
             }else if($id_receptor->isEmpty()){
                 return Response::json([
-                    'status_code' => 400,
+                    'status_code' => $json_error_status_code,
                     'message' => 'a conta receptora nao esta cadastrada no banco'
                 ]);
             }

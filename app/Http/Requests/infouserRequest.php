@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+#Import
 use Illuminate\Foundation\Http\FormRequest;
 
 class infoUserRequest extends FormRequest
@@ -25,7 +26,7 @@ class infoUserRequest extends FormRequest
     {
         return [
             'email' => 'required',
-            'nome' => 'required',
+            'name' => 'required',
             'data_nascimento' => 'required'
         ];
     }

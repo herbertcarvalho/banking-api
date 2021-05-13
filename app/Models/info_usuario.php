@@ -2,17 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+#Import
 use Illuminate\Database\Eloquent\Model;
 
 class info_usuario extends Model
 {
     protected $fillable = [
+        'id_users',
         'nome',
         'data_nascimento',
     ];
-
-    public function id_users(){
-        return $this->belongsTo('App\Models\User');
-    }
 }

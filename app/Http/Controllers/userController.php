@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
+#Request
 use App\Http\Requests\RegisterUserRequest;
+
+#Models
+use App\Models\User;
+
 
 class userController extends Controller
 {
@@ -21,6 +24,9 @@ class userController extends Controller
 
         $input['password'] = bcrypt($input['password']);
         User::create($input);
-        return response()->json(['success' => true], $this->successStatus);
+        return response()->json([
+            'status_code' => true,
+            'message' => 'Registro concluido com sucesso'
+            ]);
     }
 }
