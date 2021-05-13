@@ -17,8 +17,8 @@ class CreateContasAbertasTable extends Migration
             $table->id();
             $table->unsignedBigInteger('id_info_usuario');
             $table->foreign('id_info_usuario')->references('id')->on('info_usuarios');
-            $table->unsignedBigInteger('conta');
-            $table->unsignedBigInteger('agencia');
+            $table->unsignedBigInteger('conta')->unique();
+            $table->unsignedBigInteger('agencia')->unique();
             $table->decimal('saldo_atual' ,11,2);
             $table->timestamps();
         });

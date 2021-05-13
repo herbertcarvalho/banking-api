@@ -7,5 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class info_usuario extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'nome',
+        'data_nascimento',
+    ];
+
+    public function id_users(){
+        return $this->belongsTo('App\Models\User');
+    }
 }

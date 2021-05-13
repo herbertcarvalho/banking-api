@@ -14,19 +14,18 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('register', 'App\Http\Controllers\userController@register');
+#Finalizados
+Route::get('getallusers','App\Http\Controllers\userController@getallUsers'); #ok
+Route::get('transferencias', 'App\Http\Controllers\transferenciasController@index'); #ok
+Route::get('contasporemail' ,'App\Http\Controllers\contaagenciaController@getAllContasEmail' ); #ok
+
+#falta tratamento
+Route::post('register', 'App\Http\Controllers\userController@register'); #ok Fazer Retorno de erro de rules
+Route::post('fazertransferencia', 'App\Http\Controllers\transferenciasController@fazertransferencia'); #ok Fazer Retorno de erro de rules
+Route::post('criarcontaagencia','App\Http\Controllers\contaagenciaController@registrarConta'); #ok rules
+
+#fzd
 
 
-Route::get('transferencias', 'App\Http\Controllers\transferenciasController@index');
+Route::post('criarcadastroTableInfo','App\Http\Controllers\tableinfoController@registrarUsuarioTableInfo');
 
-Route::get('transferenciasToken' ,'App\Http\Controllers\transferenciasController@getbyuser');
-
-Route::post('fazertransferencia', 'App\Http\Controllers\transferenciasController@fazertransferencia');
-
-
-Route::middleware('password_grant.credentials')->post('login', 'App\Http\Controllers\Auth\LoginApiController@login');
-
-Route::middleware('auth:api')->group(function () {
-
-
-});

@@ -8,13 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class contas_abertas extends Model
 {
     protected $fillable = [
+        'id_info_usuario',
         'conta',
         'agencia',
-        'saldo'
+        'saldo_atual'
     ];
-
-    public function contas(){
-        return $this->belongsTo('App\Models\info_usuario');
-    }
 
 }
