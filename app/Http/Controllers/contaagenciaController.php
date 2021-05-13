@@ -53,7 +53,7 @@ class contaagenciaController extends Controller
         }
 
         $contasUsuario = contas_abertas::with([])
-            ->where(['contas_abertas.id_info_usuario' => $idTableUsers[0]['id']])
+            ->where(['contas_abertas.id_info_usuario' => $idTableInfoUser[0]['id']])
             ->get();
 
         return $contasUsuario;
@@ -86,8 +86,8 @@ class contaagenciaController extends Controller
             ]);
         }
 
-        $contaGerada=null;
-        $agenciaGerada=null;
+        $contaGerada=123456;
+        $agenciaGerada=123456;
 
         while(!(contas_abertas::with([])->where(['contas_abertas.conta' => $contaGerada])->get())->isEmpty()
                 && !(contas_abertas::with([])->where(['contas_abertas.agencia' => $contaGerada])->get()) ->isEmpty()){

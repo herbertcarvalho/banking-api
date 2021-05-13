@@ -19,13 +19,12 @@ class userController extends Controller
 
     public function register(RegisterUserRequest $request)
     {
-        var_dump($request->validated());
         $input = $request->validated();
 
         $input['password'] = bcrypt($input['password']);
         User::create($input);
         return response()->json([
-            'status_code' => true,
+            'status_code' => 200,
             'message' => 'Registro concluido com sucesso'
             ]);
     }
