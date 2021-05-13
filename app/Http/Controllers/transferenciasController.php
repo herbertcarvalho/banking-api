@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 #Requests
 use App\Http\Requests\transferAmountRequest;
+use App\Http\Requests\historicotransferenciaRequest;
 
 #Models
 use App\Models\transferencias;
@@ -18,6 +19,27 @@ class transferenciasController extends Controller
     public function index()
     {
         return transferencias::with(['doador', 'receptor'] )->get();
+    }
+
+    public function historicotransferencia(historicotransferenciaRequest $request){
+
+        $request =$request->validated();
+        $infoConta = contas_abertas::with([])
+            ->where(['contas_abertas.conta' => $request['conta']])
+            ->where(['contas_abertas.agencia' => $request['agencia']])
+            ->get();
+
+        if($infoConta->isEmpty()){
+            return Response::json([
+                'status_code' => 400,
+                'message' => 'esta combinacao de conta e agencia nao existe'
+            ]);
+        }
+
+        return Response::json([
+            'status_code' => 200,
+            'message' => $infoConta
+        ]);;
     }
 
     public function fazertransferencia(transferAmountRequest $request)

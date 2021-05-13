@@ -24,8 +24,9 @@ Route::post('register', 'App\Http\Controllers\userController@register'); #ok Faz
 Route::post('fazertransferencia', 'App\Http\Controllers\transferenciasController@fazertransferencia'); #ok Fazer Retorno de erro de rules
 Route::post('criarcontaagencia','App\Http\Controllers\contaagenciaController@registrarConta'); #ok rules
 
+Route::post('criarcadastroTableInfo','App\Http\Controllers\tableinfoController@registrarUsuarioTableInfo');
+
 #fzd
 
-
-Route::post('criarcadastroTableInfo','App\Http\Controllers\tableinfoController@registrarUsuarioTableInfo');
+Route::get('gethistoricotransferencia','App\Http\Controllers\transferenciasController@historicotransferencia');
 
