@@ -12,7 +12,6 @@ use App\Models\info_usuario;
 use App\Models\User;
 use App\Models\contas_abertas;
 
-
 #Imports
 use Illuminate\Support\Facades\Response;
 
@@ -37,15 +36,14 @@ class contaagenciaController extends Controller
 
         if($infoConta->isEmpty()){
             return Response::json([
-                'status_code' => 400,
                 'message' => 'esta combinacao de conta e agencia nao existe'
-            ]);
+            ],404);
         }
 
         return Response::json([
             'status_code' => 200,
             'message' => $infoConta
-        ]);;
+        ]);
     }
 
     public function getAllContasEmail(allContasRequest $request){

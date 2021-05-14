@@ -21,6 +21,7 @@ class transferencias extends Model
         'data_transferencia'
     ];
 
+    #dar uma olhada nos belongs
     public function doador(){
         return $this->belongsTo('App\Models\User');
     }

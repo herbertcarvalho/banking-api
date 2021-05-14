@@ -11,7 +11,6 @@ use App\Models\User;
 
 class userController extends Controller
 {
-    public $successStatus = 200;
 
     public function getallusers(){
         return User::with([])->get();
@@ -24,8 +23,7 @@ class userController extends Controller
         $input['password'] = bcrypt($input['password']);
         User::create($input);
         return response()->json([
-            'status_code' => 200,
             'message' => 'Registro concluido com sucesso'
-            ]);
+        ],200);
     }
 }

@@ -26,7 +26,7 @@ class transferenciasController extends Controller
 
         $request =$request->validated();
         $conta = $request['conta'];
-        $infoConta = transferencias::with([])
+        $infoConta = transferencias::with(['doador', 'receptor'])
             ->whereRaw("transferencias.conta_doadora = $conta OR transferencias.conta_doadora = $conta")
             ->get();
 
@@ -79,8 +79,8 @@ class transferenciasController extends Controller
                 ->get();
 
             $contaReceptoraInfoUsu = info_usuario::with([])
-            ->where(['info_usuarios.id' => $id_receptor[0]['id_info_usuario']])
-            ->get();
+                ->where(['info_usuarios.id' => $id_receptor[0]['id_info_usuario']])
+                ->get();
 
             $transferencias = transferencias::create([
                 'doador_id' => $contaDoadorInfoUsu[0]['id_users'],

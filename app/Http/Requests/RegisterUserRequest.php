@@ -4,6 +4,10 @@ namespace App\Http\Requests;
 
 #Import
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Collection;
+
+use function PHPUnit\Framework\throwException;
 
 class RegisterUserRequest extends FormRequest
 {
@@ -14,7 +18,14 @@ class RegisterUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        collect($this->header()) ->contains(["accept" , "application/json"]);
+        if(!(collect($this->header()) ->contains(["accept" , "application/json"]))){
+            abort(404);
+            return Response::json([
+                'message' => 'faltando informacoes no cabecalho'
+            ],404);
+        }
+        return $this->isJson();
     }
 
     /**
@@ -30,4 +41,5 @@ class RegisterUserRequest extends FormRequest
             'email' => 'required|email|unique:users,email'
         ];
     }
+
 }
