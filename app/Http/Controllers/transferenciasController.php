@@ -32,9 +32,8 @@ class transferenciasController extends Controller
 
         if($infoConta->isEmpty()){
             return Response::json([
-                'status_code' => 400,
                 'message' => 'esta combinacao de conta e agencia nao existe'
-            ]);
+            ],404);
         }
 
         return $infoConta;
@@ -42,7 +41,6 @@ class transferenciasController extends Controller
 
     public function fazertransferencia(transferAmountRequest $request)
     {
-        $json_error_status_code = 400;
 
         $input = $request->validated();
 
@@ -59,57 +57,53 @@ class transferenciasController extends Controller
             $novoSaldoDoador = $id_doador[0]['saldo_atual'] - $input['valor'];
             $novoSaldoReceptor = $id_receptor[0]['saldo_atual'] + $input['valor'];
 
-            if($novoSaldoDoador<0){
-                return Response::json([
-                    'status_code' => $json_error_status_code,
-                    'message' => 'o novo saldo do doador é menor que 0 impossibilitando a transferencia'
-                ]);
-            }
+        if($novoSaldoDoador<0){
+            return Response::json([
+                'message' => 'o novo saldo do doador é menor que 0 impossibilitando a transferencia'
+            ],404);
+        }
 
-            contas_abertas::with([])
-                ->where(['contas_abertas.conta' => $input['conta_doador']])
-                ->update(['saldo_atual' => $novoSaldoDoador]);
+        contas_abertas::with([])
+            ->where(['contas_abertas.conta' => $input['conta_doador']])
+            ->update(['saldo_atual' => $novoSaldoDoador]);
 
-            contas_abertas::with([])
-                ->where(['contas_abertas.conta' => $input['conta_receptor']])
-                ->update(['saldo_atual' => $novoSaldoReceptor]);
+        contas_abertas::with([])
+            ->where(['contas_abertas.conta' => $input['conta_receptor']])
+            ->update(['saldo_atual' => $novoSaldoReceptor]);
 
-            $contaDoadorInfoUsu = info_usuario::with([])
-                ->where(['info_usuarios.id' => $id_doador[0]['id_info_usuario']])
-                ->get();
+        $contaDoadorInfoUsu = info_usuario::with([])
+            ->where(['info_usuarios.id' => $id_doador[0]['id_info_usuario']])
+            ->get();
 
-            $contaReceptoraInfoUsu = info_usuario::with([])
-                ->where(['info_usuarios.id' => $id_receptor[0]['id_info_usuario']])
-                ->get();
+        $contaReceptoraInfoUsu = info_usuario::with([])
+            ->where(['info_usuarios.id' => $id_receptor[0]['id_info_usuario']])
+            ->get();
 
-            $transferencias = transferencias::create([
-                'doador_id' => $contaDoadorInfoUsu[0]['id_users'],
-                'receptor_id'=> $contaReceptoraInfoUsu[0]['id_users'],
-                'conta_doadora'=> $input['conta_doador'],
-                'conta_receptora' => $input['conta_receptor'],
-                'quantia_transferida' => $input['valor'],
-                'data_transferencia' => date('Y-m-d')
-            ]);
+        $transferencias = transferencias::create([
+            'doador_id' => $contaDoadorInfoUsu[0]['id_users'],
+            'receptor_id'=> $contaReceptoraInfoUsu[0]['id_users'],
+            'conta_doadora'=> $input['conta_doador'],
+            'conta_receptora' => $input['conta_receptor'],
+            'quantia_transferida' => $input['valor'],
+            'data_transferencia' => date('Y-m-d')
+        ]);
 
             return Response::json([
-                'status_code' => 200,
                 'saldo_doador' => $novoSaldoDoador,
                 'saldo_receptor' => $novoSaldoReceptor,
                 'transferencia' => $transferencias,
-            ]);
+            ],200);
 
         }else{
 
             if($id_doador->isEmpty()){
                 return Response::json([
-                    'status_code' => $json_error_status_code,
                     'message' => 'a conta doadora nao esta cadastrada no banco'
-                ]);
+                ],404);
             }else if($id_receptor->isEmpty()){
                 return Response::json([
-                    'status_code' => $json_error_status_code,
                     'message' => 'a conta receptora nao esta cadastrada no banco'
-                ]);
+                ],404);
             }
         }
     }

@@ -16,8 +16,6 @@ class tableinfoController extends Controller
 {
     public function registrarUsuarioTableInfo(infoUserRequest $request){
 
-        $json_error_status_code = 400;
-
         $request = $request->validated();
 
         $userRequest = User::with([])
@@ -30,9 +28,8 @@ class tableinfoController extends Controller
 
         if(!($infoUserRequest->isEmpty())){
             return Response::json([
-                'status_code' => $json_error_status_code,
                 'message' => 'o cliente ja possui cadastro na tabela info_usuarios'
-            ]);
+            ],404);
         }
 
         info_usuario::create([
@@ -42,8 +39,7 @@ class tableinfoController extends Controller
         ]);
 
         return Response::json([
-            'status_code' => 200,
             'message' => 'o cliente foi cadastrado com sucesso'
-        ]);
+        ],200);
     }
 }

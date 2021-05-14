@@ -21,12 +21,11 @@ class transferencias extends Model
         'data_transferencia'
     ];
 
-    #dar uma olhada nos belongs
     public function doador(){
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\User','doador_id');
     }
 
     public function receptor(){
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\User','receptor_id');
     }
 }

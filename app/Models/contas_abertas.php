@@ -14,4 +14,8 @@ class contas_abertas extends Model
         'saldo_atual'
     ];
 
+    public function info_usu(){
+        $request = $this->belongsTo('App\Models\info_usuario','id_info_usuario');
+        return $request;
+    }
 }
