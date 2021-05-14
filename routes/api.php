@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 Route::get('getallusers','App\Http\Controllers\userController@getallUsers'); #ok
 Route::get('transferencias', 'App\Http\Controllers\transferenciasController@index'); #ok
 Route::get('contasporemail' ,'App\Http\Controllers\contaagenciaController@getAllContasEmail' ); #ok
+Route::get('getinfoaccount','App\Http\Controllers\contaagenciaController@getinfoaccount'); #ok
 
 #falta tratamento
 Route::post('register', 'App\Http\Controllers\userController@register'); #ok Fazer Retorno de erro de rules
@@ -28,5 +29,7 @@ Route::post('criarcadastroTableInfo','App\Http\Controllers\tableinfoController@r
 
 #fzd
 
-Route::get('gethistoricotransferencia','App\Http\Controllers\transferenciasController@historicotransferencia');
+Route::get('historicoporconta','App\Http\Controllers\transferenciasController@historicotransferencia');
+
+
 

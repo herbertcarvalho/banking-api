@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 #Requests
 use App\Http\Requests\allContasRequest;
 use App\Http\Requests\contaagenciaRequest;
+use App\Http\Requests\getInfoAccountRequest;
 
 #Models
 use App\Models\info_usuario;
 use App\Models\User;
 use App\Models\contas_abertas;
+
 
 #Imports
 use Illuminate\Support\Facades\Response;
@@ -23,6 +25,27 @@ class contaagenciaController extends Controller
 
     public static function generateAgencia(){
         return random_int(1,9999);
+    }
+
+    public function getinfoaccount(getInfoAccountRequest $request){
+
+        $request =$request->validated();
+        $infoConta = contas_abertas::with([])
+            ->where(['contas_abertas.conta' => $request['conta']])
+            ->where(['contas_abertas.agencia' => $request['agencia']])
+            ->get();
+
+        if($infoConta->isEmpty()){
+            return Response::json([
+                'status_code' => 400,
+                'message' => 'esta combinacao de conta e agencia nao existe'
+            ]);
+        }
+
+        return Response::json([
+            'status_code' => 200,
+            'message' => $infoConta
+        ]);;
     }
 
     public function getAllContasEmail(allContasRequest $request){

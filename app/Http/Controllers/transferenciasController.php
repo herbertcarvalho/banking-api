@@ -25,9 +25,9 @@ class transferenciasController extends Controller
     public function historicotransferencia(historicotransferenciaRequest $request){
 
         $request =$request->validated();
-        $infoConta = contas_abertas::with([])
-            ->where(['contas_abertas.conta' => $request['conta']])
-            ->where(['contas_abertas.agencia' => $request['agencia']])
+        $conta = $request['conta'];
+        $infoConta = transferencias::with([])
+            ->whereRaw("transferencias.conta_doadora = $conta OR transferencias.conta_doadora = $conta")
             ->get();
 
         if($infoConta->isEmpty()){
@@ -37,10 +37,7 @@ class transferenciasController extends Controller
             ]);
         }
 
-        return Response::json([
-            'status_code' => 200,
-            'message' => $infoConta
-        ]);;
+        return $infoConta;
     }
 
     public function fazertransferencia(transferAmountRequest $request)
@@ -88,6 +85,8 @@ class transferenciasController extends Controller
             $transferencias = transferencias::create([
                 'doador_id' => $contaDoadorInfoUsu[0]['id_users'],
                 'receptor_id'=> $contaReceptoraInfoUsu[0]['id_users'],
+                'conta_doadora'=> $input['conta_doador'],
+                'conta_receptora' => $input['conta_receptor'],
                 'quantia_transferida' => $input['valor'],
                 'data_transferencia' => date('Y-m-d')
             ]);
