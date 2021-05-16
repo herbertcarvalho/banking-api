@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+#imports
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 
@@ -14,6 +15,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
+	    $this->call(alltables::class);
     }
 }

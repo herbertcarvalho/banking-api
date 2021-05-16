@@ -8,12 +8,24 @@ use App\Http\Requests\RegisterUserRequest;
 #Models
 use App\Models\User;
 
+#imports
+use Illuminate\Support\Facades\Response;
 
 class userController extends Controller
 {
 
     public function getallusers(){
-        return User::with([])->get();
+        $request = User::with([])->get();
+        if($request ->isEmpty()){
+            return Response::json([
+                'message' => 'nao possui nenhum cadastro de usuario'
+            ],404);
+        }else{
+            return Response::json([
+                'message' => 'requisicao concluida com sucesso',
+                'Usuarios' => $request
+            ],200);
+        }
     }
 
     public function register(RegisterUserRequest $request)

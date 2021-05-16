@@ -19,7 +19,17 @@ class transferenciasController extends Controller
 
     public function index()
     {
-        return transferencias::with(['doador', 'receptor'] )->get();
+        $request = transferencias::with(['doador', 'receptor'] )->get();
+        if($request ->isEmpty()){
+            return Response::json([
+                'message' => 'nao possui nenhum cadastro de usuario'
+            ],404);
+        }else{
+            return Response::json([
+                'message' => 'requisicao concluida com sucesso',
+                'Usuarios' => $request
+            ],200);
+        }
     }
 
     public function historicotransferencia(historicotransferenciaRequest $request){
