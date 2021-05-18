@@ -18,14 +18,15 @@ class RegisterUserRequest extends FormRequest
      */
     public function authorize()
     {
-        collect($this->header()) ->contains(["accept" , "application/json"]);
+        /*collect($this->header()) ->contains(["accept" , "application/json"]);
         if(!(collect($this->header()) ->contains(["accept" , "application/json"]))){
-            abort(404);
-            return Response::json([
+            return response()->json([
                 'message' => 'faltando informacoes no cabecalho'
             ],404);
         }
-        return $this->isJson();
+        return $this->isJson();*/
+
+        return true;
     }
 
     /**

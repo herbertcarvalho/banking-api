@@ -28,7 +28,7 @@ Route::post('criarcontaagencia','App\Http\Controllers\contaagenciaController@reg
 
 Route::post('criarcadastroTableInfo','App\Http\Controllers\tableinfoController@registrarUsuarioTableInfo');
 
-Route::middleware('password_grant.credentials')->post('login', 'Auth\LoginApiController@login');
+Route::post('login', 'App\Http\Controllers\LoginController@logar');
 
 
 #Route::apiResource('getallusers','App\Http\Controllers\userController@getallUsers');

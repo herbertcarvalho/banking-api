@@ -10,6 +10,7 @@ use App\Models\User;
 
 #imports
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Hash;
 
 class userController extends Controller
 {
@@ -30,9 +31,10 @@ class userController extends Controller
 
     public function register(RegisterUserRequest $request)
     {
+
         $input = $request->validated();
 
-        $input['password'] = bcrypt($input['password']);
+        $input['password'] = Hash::make($input['password']);
         User::create($input);
         return response()->json([
             'message' => 'Registro concluido com sucesso'
