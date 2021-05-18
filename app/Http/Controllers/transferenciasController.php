@@ -41,7 +41,7 @@ class transferenciasController extends Controller
             ->get();
 
         if($infoConta->isEmpty()){
-            return Response::json([
+            return response()->json([
                 'message' => 'esta combinacao de conta e agencia nao existe'
             ],404);
         }

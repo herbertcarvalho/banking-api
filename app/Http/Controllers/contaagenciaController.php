@@ -30,7 +30,7 @@ class contaagenciaController extends Controller
 
         $request =$request->validated();
 
-        $infoConta = contas_abertas::with([])
+        $infoConta = contas_abertas::with(['info_usu'])
             ->where(['contas_abertas.conta' => $request['conta']])
             ->where(['contas_abertas.agencia' => $request['agencia']])
             ->get();
