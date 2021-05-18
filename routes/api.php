@@ -28,11 +28,10 @@ Route::post('criarcontaagencia','App\Http\Controllers\contaagenciaController@reg
 
 Route::post('criarcadastroTableInfo','App\Http\Controllers\tableinfoController@registrarUsuarioTableInfo');
 
-Route::middleware('auth:api')->get('/user' , function(Request $request)){
-    return $request->user();
-}
+Route::middleware('password_grant.credentials')->post('login', 'Auth\LoginApiController@login');
 
 
+#Route::apiResource('getallusers','App\Http\Controllers\userController@getallUsers');
 
 
 
